@@ -89,7 +89,7 @@ def download_extract(title, latest_page):
     download_webtoon_mp(title, latest_page)
     with Pool(cpu_count()) as p:
         p.map(extract_text, glob(f'imgs/{title}/*'))
-    result_file = f'text/{title}.txt'
+    result_file = f'dataset/{title}.txt'
     if not path.exists(result_file) or os.stat(result_file).st_size == 0:
         with open(result_file, 'w', encoding='utf-8') as f:
             for txt in glob(f'text/{title}/*.txt'):
