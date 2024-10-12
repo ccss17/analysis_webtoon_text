@@ -1,2 +1,7 @@
+__pycache__/
 imgs/
 text/
+log/
+test/
+memo*
+test*
