@@ -46,3 +46,5 @@ female.freq <- female.freq %>% rename(female.word=all, female.Freq=Freq)
 all.freq <- cbind_fill(male.freq, female.freq)
 
 all.freq %>% head(50)
+write.csv(all.freq, "freq.csv", row.names=FALSE)
+freq.csv <- read.csv('freq.csv')
