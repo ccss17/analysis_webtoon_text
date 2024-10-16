@@ -5,3 +5,5 @@ log/
 test/
 memo*
 test*
+.Rproj.user
+.vscode/

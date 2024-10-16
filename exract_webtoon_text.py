@@ -75,7 +75,7 @@ def download_extract_page(webtoon_page, title, header_set, img_root='imgs', text
     extract_text(img_dir, img_root=img_root, text_root=text_root)
 
 def download_extract_webtoon(title, latest_page, label, header_set, index, processes=4):
-    result_file = f'dataset/{label}/{index}-{title}.txt'
+    result_file = f'dataset/{label}/{str(index).zfill(3)}-{title}.txt'
     result_dirpath = path.dirname(result_file)
     if not path.exists(result_dirpath):
         os.makedirs(result_dirpath)
@@ -131,55 +131,15 @@ def run(request_page_headers, request_img_headers):
 
 def webtoon_title_list(request_page_headers):
     urls = '''
-https://comic.naver.com/webtoon/detail?titleId=811716&no=70&week=wed
-https://comic.naver.com/webtoon/detail?titleId=823076&no=27&week=thu
-https://comic.naver.com/webtoon/detail?titleId=742105&no=196&week=wed
-https://comic.naver.com/webtoon/detail?titleId=814599&no=57&week=wed
-https://comic.naver.com/webtoon/detail?titleId=783052&no=154&week=mon
-https://comic.naver.com/webtoon/detail?titleId=819929&no=42&week=tue
-https://comic.naver.com/webtoon/detail?titleId=809694&no=73&week=sat
-https://comic.naver.com/webtoon/detail?titleId=765158&no=166&week=wed
-https://comic.naver.com/webtoon/detail?titleId=822931&no=28&week=tue
-https://comic.naver.com/webtoon/detail?titleId=831168&no=5&week=tue
-https://comic.naver.com/webtoon/detail?titleId=824782&no=23&week=mon
-https://comic.naver.com/webtoon/detail?titleId=829830&no=7&week=wed
-https://comic.naver.com/webtoon/detail?titleId=828167&no=25&week=mon
-https://comic.naver.com/webtoon/detail?titleId=820104&no=83&week=thu
-https://comic.naver.com/webtoon/detail?titleId=820104&no=83&week=thu
-https://comic.naver.com/webtoon/detail?titleId=827863&no=16&week=fri
-https://comic.naver.com/webtoon/detail?titleId=796252&no=82&week=sat
-https://comic.naver.com/webtoon/detail?titleId=812164&no=68&week=thu
-https://comic.naver.com/webtoon/detail?titleId=818448&no=98&week=tue
-https://comic.naver.com/webtoon/detail?titleId=818888&no=46&week=wed
-https://comic.naver.com/webtoon/detail?titleId=804157&no=94&week=sun
-https://comic.naver.com/webtoon/detail?titleId=814817&no=56&week=tue
-https://comic.naver.com/webtoon/detail?titleId=827908&no=15&week=sun
-https://comic.naver.com/webtoon/detail?titleId=820169&no=39&week=sun
-https://comic.naver.com/webtoon/detail?titleId=818020&no=34&week=mon
-https://comic.naver.com/webtoon/detail?titleId=773797&no=169&week=fri
-https://comic.naver.com/webtoon/detail?titleId=760001&no=174&week=wed
-https://comic.naver.com/webtoon/detail?titleId=760001&no=174&week=wed
-https://comic.naver.com/webtoon/detail?titleId=817346&no=53&week=tue
-https://comic.naver.com/webtoon/detail?titleId=822239&no=32&week=fri
-https://comic.naver.com/webtoon/detail?titleId=821321&no=36&week=wed
-https://comic.naver.com/webtoon/detail?titleId=814289&no=55&week=fri
-https://comic.naver.com/webtoon/detail?titleId=807809&no=3&week=dailyPlus
-https://comic.naver.com/webtoon/detail?titleId=825415&no=20&week=thu
-https://comic.naver.com/webtoon/detail?titleId=832575&no=3&week=sat
-https://comic.naver.com/webtoon/detail?titleId=821095&no=36&week=mon
-https://comic.naver.com/webtoon/detail?titleId=807582&no=80&week=tue
-https://comic.naver.com/webtoon/detail?titleId=827752&no=3&week=dailyPlus
-https://comic.naver.com/webtoon/detail?titleId=828400&no=12&week=wed
-https://comic.naver.com/webtoon/detail?titleId=786082&no=125&week=sun
-https://comic.naver.com/webtoon/detail?titleId=797443&no=95&week=wed
-https://comic.naver.com/webtoon/detail?titleId=828103&no=12&week=mon
-https://comic.naver.com/webtoon/detail?titleId=827290&no=15&week=mon
-https://comic.naver.com/webtoon/detail?titleId=804333&no=185&week=tue
-https://comic.naver.com/webtoon/detail?titleId=602910&no=512&week=mon
-https://comic.naver.com/webtoon/detail?titleId=824780&no=3&week=dailyPlus
 '''
     for url in urls.strip().split('\n'):
         print(webtoon_title(url, headers=parse_headers(request_page_headers)))
+
+def rename_zfill():
+    dir_path = 'dataset\\female'
+    for txt in os.listdir(dir_path):
+        a, b = txt.split('-', maxsplit=1)
+        os.rename(path.join(dir_path, txt), path.join(dir_path, f'{a.zfill(3)}-{b}'))
 
 if __name__ == '__main__':
     from pprint import pprint
